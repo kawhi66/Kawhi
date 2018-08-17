@@ -3,7 +3,7 @@ title: '【译】JavaScript Module Pattern: In-Depth'
 date: 2018-07-19 11:01:48
 tags: 译文
 ---
-初识这篇文章是来自于阮一峰的《*Javascript 模块化编程*》，我在写《*ECMAScript 2015(ES6)：import 和 export 命令*》的时候做了参考。由于这篇文章是英文版的，我在这里把它翻译一遍，愿有所裨益。
+From [JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)
 
 # 关于作者
 

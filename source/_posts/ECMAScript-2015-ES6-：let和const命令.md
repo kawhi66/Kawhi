@@ -3,7 +3,7 @@ title: ECMAScript 2015(ES6)：let 和 const 命令
 date: 2018-07-18 16:03:18
 tags: ES6
 ---
-`let` or `const` or `var` ?
+let or const or var ?
 
 本文要学习和讨论的是 ES6 新增的两个变量声明的关键字 let 和 const。在 ES5 中，我们一般使用 var 关键字来声明变量：`var test = 1, test1 = "kawhi";`，这种声明方式会给我们带来一些麻烦，具体来看一下：
 

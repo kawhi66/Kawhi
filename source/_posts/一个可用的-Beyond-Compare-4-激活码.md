@@ -1,7 +1,7 @@
 ---
 title: 一个可用的 Beyond Compare 4 激活码
 date: 2018-07-24 16:09:18
-tags:
+tags: tool
 ---
 From [Beyond Compare4激活码](https://blog.csdn.net/tb9125256/article/details/80717908)
 
