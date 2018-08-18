@@ -3,6 +3,8 @@ title: 基于 light-api 开发 RESTful 服务（一）
 date: 2018-08-17 11:16:52
 tags: [Node, light-api]
 ---
+未完待续。。。
+
 最近基于 [light-api](https://document.lightyy.com/restapi_dev/index.html) 完成了一个服务端项目，这也是我的第一个真正意义上的服务端项目，特此记录。
 
 # 一、理解 RESTful 架构
