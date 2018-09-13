@@ -14,7 +14,7 @@ tags: [每天一道面试题, CSS]
 
 **相关问题：**
 
-> 外边距合并/外边距重叠/ margin 越界
+> [外边距合并/外边距重叠/ margin 越界](/2018/09/13/外边距合并现象/)
 > javaScript 获取和设置元素尺寸
 > 块格式化上下文（Block Formatting Context，BFC）
 
