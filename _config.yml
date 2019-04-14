@@ -81,3 +81,16 @@ deploy:
   type: git
   repo: git@github.com:kawhi66/Kawhi-hexo-source.git
   branch: master
+
+noise:
+  menu:
+    Home: /
+    Archives: archives
+    # About: about
+  social:
+    github: kawhi66
+
+  fancybox: true
+  infinite_scroll: true
+  show_toc: true
+  toc_words: "Table of Contents"
