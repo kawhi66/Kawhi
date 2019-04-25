@@ -86,6 +86,7 @@ noise:
   menu:
     Home: /
     Archives: archives
+    Todo: todo
     # About: about
   social:
     github: kawhi66
@@ -94,3 +95,10 @@ noise:
   infinite_scroll: true
   show_toc: true
   toc_words: "目录"
+
+# Imgurl
+# Important: This value starts without a protocol and it doesn't end with '/'.
+# httpsMod: true | false
+# If the value not set, image url will automatically adapt to the site's protocol.
+imgurl: localhost:4000/images
+httpsMod:
