@@ -4,5 +4,5 @@
 -   Verify if the GET requests have the CORS problem
 -   Support React project in Arwen based on [react-boilerplate](https://github.com/kawhi66/react-boilerplate)
 -   Support Nodejs project in Arwen based on [hackathon-starter](https://github.com/kawhi66/hackathon-starter)
--   The implementation of Promise
--   Solution of serial execution for asynchronous events
+-   The implementation of Promise - working
+-   Solution of serial execution for asynchronous events - done
