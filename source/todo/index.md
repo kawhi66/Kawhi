@@ -8,3 +8,4 @@
 -   The implementation of Promise - _suspend_
 -   Solution of serial execution for asynchronous events - _done_
 -   How does HTTP Cache work
+-   How to handle Circular Dependency in module system
