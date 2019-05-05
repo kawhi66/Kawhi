@@ -1,7 +1,7 @@
 # 代办事项
 
 -   The implementation of Virtual DOM
--   Verify if GET requests have Cross-Origin problem - done, sure they have
+-   Verify if GET requests have Cross-Origin problem - _done, sure they have_
 -   How does CORS work
 -   Support React project in Arwen based on [react-boilerplate](https://github.com/kawhi66/react-boilerplate)
 -   Support Nodejs project in Arwen based on [hackathon-starter](https://github.com/kawhi66/hackathon-starter)
