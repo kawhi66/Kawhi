@@ -5,6 +5,7 @@
 -   The implementation of Promise - _suspend_
 -   Verify if GET requests have Cross-Origin problem - _done, sure they have_
 -   Solution of serial execution for asynchronous events - _done_
+-   When will fn execute in setTimeout(fn, 0)
 -   How to handle Web-Security problem
 -   How does CORS work
 -   How does HTTP Cache work
