@@ -6,6 +6,7 @@
 -   The implementation of Promise - _suspend_
 -   Verify if GET requests have Cross-Origin problem - _done, sure they have_
 -   Solution of serial execution for asynchronous events - _done_
+-   Solution of Asynchronous Programming in ES6
 -   The application scenarios of Higher-Order-Function and Currying
 -   The application scenarios of Debounce and Throttling
 -   When will fn execute in setTimeout(fn, 0)
