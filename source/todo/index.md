@@ -1,6 +1,7 @@
 # ToDo list
 
 -   The implementation of Virtual DOM - _working_
+-   The Vue's and React's implementation of Diff Algorithm - _working_
 -   How to handle Circular Dependency in module system - _working_
 -   The implementation of Promise - _suspend_
 -   Verify if GET requests have Cross-Origin problem - _done, sure they have_
