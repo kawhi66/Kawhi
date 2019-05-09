@@ -11,6 +11,7 @@
 -   The application scenarios of Debounce and Throttling
 -   When will fn execute in setTimeout(fn, 0)
 -   How to handle Web-Security problem
+-   How to optimize Http Connection
 -   How to use Webpack for multiple page application development
 -   How does CORS work
 -   How does Digital Signature and Digital Certificate work
