@@ -3,6 +3,7 @@
 -   How to handle Circular Dependency in module system - _working_
 -   How to use Webpack for multiple page application development - _working_
 -   The differences between Webpack and Rollup - _working_
+-   What is Tree-shaking - _working_
 -   The implementation of Virtual DOM - _suspend_
 -   The Vue's and React's implementation of Diff Algorithm - _suspend_
 -   The implementation of Promise - _suspend_
