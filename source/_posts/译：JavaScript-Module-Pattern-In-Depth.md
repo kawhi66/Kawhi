@@ -1,5 +1,5 @@
 ---
-title: '译：深入理解 JavaScript 模块化'
+title: '译：JavaScript Module Pattern: In-Depth'
 date: 2018-07-19 11:01:48
 tags: 外文翻译
 ---
