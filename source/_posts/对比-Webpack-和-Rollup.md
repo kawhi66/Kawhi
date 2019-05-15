@@ -79,3 +79,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 ```
 
 总体上来讲，Rollup 的打包结果无论从可读性，还是文件体积都有明显的优势。有[文章](http://www.ayqy.net/blog/%E4%BB%8Ewebpack%E5%88%B0rollup/)还指出，`__webpack_require__` 在执行时效率不高，因而就打包结果来说，Rollup 的处理要更好一些。
+
+# 特性对比
+
+Webpack 和 Rollup 两者的历史渊源，我没有深究，不过早在两年前（2017 年）就有[文章](http://www.ayqy.net/blog/%E4%BB%8Ewebpack%E5%88%B0rollup/)提出要放弃 Webpack。关于两者的特性对比，我还没有想到好的方法去做实践对比，如果要完全搞清楚，只能是深入到源码层面。
+
+我看到的几篇关于两者对比的文章观点基本是一致的，Webpack 在代码分块（Code-splitting）和对静态资源（Static assets）的支持上要好与 Rollup，而 Rollup 则在代码优化（Tree shaking）和对 ES 模块规范的原生支持上更好一些。
+
+# 使用场景对比
