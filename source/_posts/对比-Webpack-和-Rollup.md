@@ -90,7 +90,7 @@ Webpack 和 Rollup 两者的历史渊源，我没有深究，不过早在两年�
 -   代码分块（Code-splitting）
 -   静态资源（Static assets）
 -   模块热更新（Hot module replacement）
--   插件和生态圈（Plugins and environment）
+-   插件和生态圈（Plugins and ecosystem）
 
 ## Rollup 的优势
 
