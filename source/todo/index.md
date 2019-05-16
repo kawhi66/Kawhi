@@ -2,13 +2,13 @@
 
 -   How to handle Circular Dependency in module system - _working_
 -   How to use Webpack for multiple page application development - _working_
--   The differences between Webpack and Rollup - _working_
 -   What is Tree-shaking, and how to enable it in Webpack - _working_
 -   The implementation of Virtual DOM - _suspend_
 -   The Vue's and React's implementation of Diff Algorithm - _suspend_
 -   The implementation of Promise - _suspend_
 -   Verify if GET requests have Cross-Origin problem - _done, sure they have_
 -   Solution of serial execution for asynchronous events - _done_
+-   The differences between Webpack and Rollup - _done_
 -   Solution of Asynchronous Programming in ES6
 -   Why are ES modules better than CommonJS modules
 -   The application scenarios of Higher-Order-Function and Currying
