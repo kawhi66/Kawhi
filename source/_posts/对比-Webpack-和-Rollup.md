@@ -82,8 +82,29 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 
 # 特性对比
 
-Webpack 和 Rollup 两者的历史渊源，我没有深究，不过早在两年前（2017 年）就有[文章](http://www.ayqy.net/blog/%E4%BB%8Ewebpack%E5%88%B0rollup/)提出要放弃 Webpack。关于两者的特性对比，我还没有想到好的方法去做实践对比，如果要完全搞清楚，只能是深入到源码层面。
+Webpack 和 Rollup 两者的历史渊源，我没有深究，不过早在两年前（2017 年）就有[文章](http://www.ayqy.net/blog/%E4%BB%8Ewebpack%E5%88%B0rollup/)提出要放弃 Webpack。关于两者的特性对比，我还没有想到好的方法去做实践对比，如果要完全搞清楚，也许要深入到源码层面。我看过的关于两者对比的文章（[Webpack and Rollup: the same but different](https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c)（这篇文章是由 Rollup 的作者 [Rich Harris](https://medium.com/@Rich_Harris?source=user_popover) 本人写的），[Rollup vs Webpack](https://medium.com/jsdownunder/rollup-vs-webpack-javascript-bundling-in-2018-b35758a2268)，[Webpack vs Rollup](https://blog.csdn.net/wangyiyungw/article/details/84955909)（这是国内的开发者写的一篇文章））观点基本是一致的：
 
-我看到的几篇关于两者对比的文章观点基本是一致的，Webpack 在代码分块（Code-splitting）和对静态资源（Static assets）的支持上要好与 Rollup，而 Rollup 则在代码优化（Tree shaking）和对 ES 模块规范的原生支持上更好一些。
+## Webpack 的优势
+
+-   代码分块（Code-splitting）
+-   静态资源（Static assets）
+-   模块热更新（Hot module replacement）
+-   插件和生态圈（Plugins and environment）
+
+## Rollup 的优势
+
+-   代码优化（Tree shaking / live code inclusion / dead code elimination）
+-   ES 模块规范的原生支持和丰富的模块规范支持（ESNext native support and more）
+-   简介的 API （Simple API）
 
 # 使用场景对比
+
+> Use webpack for apps, and Rollup for libraries
+
+Rollup 的作者 [Rich Harris](https://medium.com/@Rich_Harris?source=user_popover) 在 2017 年的文章 [Webpack and Rollup: the same but different](https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c) 中提到了这个观点，它几乎成为了众多开发者公认的最佳应用实践，很多主流的 JavaScript 库也都在这么用。
+
+需要注意的是，这并不是一个绝对的规则，[Rich Harris](https://medium.com/@Rich_Harris?source=user_popover) 是这么说的：
+
+> If you need code-splitting, or you have lots of static assets, or you’re building something with lots of CommonJS dependencies, Webpack is a better choice. If your codebase is ES2015 modules and you’re making something to be used by other people, you probably want Rollup.
+
+如果你需要代码分块，或者有很多的静态资源，又或者你正在构建的东西用到了大量的 CommonJS 规范的模块依赖，webpack 是一个更好的选择。如果你的代码符合 ES2015 模块规范，而且想要它可以被其他人使用，你也许应该选择 rollup。
