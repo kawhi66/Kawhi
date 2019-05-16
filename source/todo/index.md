@@ -1,27 +1,29 @@
 # ToDo list
 
+This is my todo list, it's pretty boring.
+
 ## working
 
--   How to handle Circular Dependency in module system - _working_
--   When will fn execute in setTimeout(fn, 0) - _working_
--   How does Event Loop work in different environment - _working_
--   Why are ES modules better than CommonJS modules - _working_
+-   How to handle Circular Dependency in module system
+-   When will fn execute in setTimeout(fn, 0)
+-   How does Event Loop work in different environment
+-   Why are ES modules better than CommonJS modules
 
 ## suspend
 
--   The implementation of Virtual DOM - _suspend_
--   The Vue's and React's implementation of Diff Algorithm - _suspend_
--   The implementation of Promise - _suspend_
+-   The implementation of Virtual DOM
+-   The Vue's and React's implementation of Diff Algorithm
+-   The implementation of Promise
 
 ## done
 
--   Verify if GET requests have Cross-Origin problem - _done, sure they have_
--   Solution of serial execution for asynchronous events - _done_
--   The differences between Webpack and Rollup - _done_
--   What is Tree-shaking, and how to enable it in Webpack - _done_
--   How to use Webpack for multiple page application development - _done_
+-   Verify if GET requests have Cross-Origin problem
+-   Solution of serial execution for asynchronous events
+-   The differences between Webpack and Rollup
+-   What is Tree-shaking, and how to enable it in Webpack
+-   How to use Webpack for multiple page application development
 
-## todo
+## not-started
 
 -   Solution of Asynchronous Programming in ES6
 -   The application scenarios of Higher-Order-Function and Currying
