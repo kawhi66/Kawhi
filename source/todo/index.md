@@ -4,6 +4,7 @@ This is my todo list, it's pretty boring.
 
 ## working
 
+-   Support React project in Arwen based on [react-boilerplate](https://github.com/kawhi66/react-boilerplate)
 -   How to handle Circular Dependency in module system
 -   When will fn execute in setTimeout(fn, 0)
 -   How does Event Loop work in different environment
@@ -36,5 +37,4 @@ This is my todo list, it's pretty boring.
 -   How to handle Web-Security problem
 -   How to optimize Http Connection
 -   The differences between TCP and UDP
--   Support React project in Arwen based on [react-boilerplate](https://github.com/kawhi66/react-boilerplate)
 -   Support Nodejs project in Arwen based on [hackathon-starter](https://github.com/kawhi66/hackathon-starter)
