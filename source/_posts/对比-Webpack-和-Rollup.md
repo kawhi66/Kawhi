@@ -82,7 +82,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 
 # 特性对比
 
-·
 Webpack 和 Rollup 两者的历史渊源，我没有深究，不过早在两年前（2017 年）就有[文章](http://www.ayqy.net/blog/%E4%BB%8Ewebpack%E5%88%B0rollup/)提出要放弃 Webpack。关于两者的特性对比，我还没有想到好的方法去做实践对比，如果要完全搞清楚，也许要深入到源码层面。我看过的关于两者对比的文章（[Webpack and Rollup: the same but different](https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c)（这篇文章是由 Rollup 的作者 [Rich Harris](https://medium.com/@Rich_Harris?source=user_popover) 本人写的），[Rollup vs Webpack](https://medium.com/jsdownunder/rollup-vs-webpack-javascript-bundling-in-2018-b35758a2268)，[Webpack vs Rollup](https://blog.csdn.net/wangyiyungw/article/details/84955909)（这是国内的开发者写的一篇文章））观点基本是一致的：
 
 ## Webpack 的优势
@@ -96,13 +95,13 @@ Webpack 和 Rollup 两者的历史渊源，我没有深究，不过早在两年�
 
 -   代码优化（Tree shaking / live code inclusion / dead code elimination）
 -   ES 模块规范的原生支持和丰富的模块规范支持（ESNext native support and more）
--   简介的 API （Simple API）
+-   简洁的 API （Simple API）
 
 # 使用场景对比
 
 > Use webpack for apps, and Rollup for libraries
 
-Rollup 的作者 [Rich Harris](https://medium.com/@Rich_Harris?source=user_popover) 在 2017 年的文章 [Webpack and Rollup: the same but different](https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c) 中提到了这个观点，它几乎成为了众多开发者公认的最佳应用实践，很多主流的 JavaScript 库也都在这么用。
+Rollup 的作者 [Rich Harris](https://medium.com/@Rich_Harris?source=user_popover) 在 2017 年的文章 [Webpack and Rollup: the same but different](https://medium.com/webpack/webpack-and-rollup-the-same-but-different-a41ad427058c) 中提到了这个观点，它也成为了众多开发者公认的最佳应用实践，很多主流的 JavaScript 库也都在这么用。
 
 需要注意的是，这并不是一个绝对的规则，[Rich Harris](https://medium.com/@Rich_Harris?source=user_popover) 是这么说的：
 
