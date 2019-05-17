@@ -28,6 +28,7 @@ This is my todo list, it's pretty boring.
 -   Solution of Asynchronous Programming in ES6
 -   The application scenarios of Higher-Order-Function and Currying
 -   The application scenarios of Debounce and Throttling
+-   What is AST
 -   What is Event Bubbling
 -   How does Digital Signature and Digital Certificate work
 -   How does CORS work
