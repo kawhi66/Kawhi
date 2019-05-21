@@ -102,3 +102,18 @@ noise:
 # If the value not set, image url will automatically adapt to the site's protocol.
 imgurl: localhost:4000/images
 httpsMod:
+
+img_optimization: # root of configuration for image optimization
+  exclude: # exclude takes an array of file names or directories to ignore from the public folder. Defaults to no exclusions.
+    - favicon.png # anything else is a file
+  jpg:
+    enabled: true # if false, jpgs will get ignored. Defaults to true
+    params: -resize 760000@ # parameter string to pass to imagemagick's convert function
+  png: # jpg/png/jpeg all have the same fields and can be configured independently
+    enabled: false
+    # thumb: -resize 680x680> -strip -quality 82 -alpha Remove
+  jpeg:
+    enabled: false
+  # these parameters will be used for any file types that do not have a params parameter defined in config. You can override these to your own preferred defaults.
+  default_params: -resize 760000@ -filter Triangle -define filter:support=2 -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality 85 -define jpeg:fancy-upsampling=off -interlace none -colorspace sRGB -strip -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all
+  # default_thumb: -resize 680x680> -sampling-factor 4:2:0 -strip -quality 85 -interlace JPEG -colorspace RGB
