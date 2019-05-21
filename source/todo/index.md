@@ -28,6 +28,7 @@ This is my todo list, it's pretty boring.
 ## not-started
 
 -   Solution of Asynchronous Programming in ES6
+-   The application scenarios of MutationObserver
 -   The application scenarios of Higher-Order-Function and Currying
 -   The application scenarios of Debounce and Throttling
 -   What is AST
