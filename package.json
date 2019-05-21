@@ -27,7 +27,9 @@
         "hexo-img-optimization": "^2.0.1"
     },
     "scripts": {
-        "predeploy": "hexo clean",
+        "prestart": "hexo clean",
+        "start": "hexo server",
+        "predeploy": "yarn prestart",
         "deploy": "hexo generate && hexo img && hexo deploy"
     }
 }
