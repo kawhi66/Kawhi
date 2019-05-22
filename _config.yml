@@ -106,6 +106,7 @@ httpsMod:
 img_optimization: # root of configuration for image optimization
   exclude: # exclude takes an array of file names or directories to ignore from the public folder. Defaults to no exclusions.
     - favicon.png # anything else is a file
+    - jake.jpg # this is an avatar
   jpg:
     enabled: true # if false, jpgs will get ignored. Defaults to true
     params: -resize 760000@ # parameter string to pass to imagemagick's convert function
