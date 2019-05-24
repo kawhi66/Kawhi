@@ -4,7 +4,6 @@ This is my todo list, it's pretty boring.
 
 ## working
 
--   How does Event Loop work in different environment
 -   When will fn execute in setTimeout(fn, 0)
 -   The implementation of Sorting Algorithms
 -   Why are ES modules better than CommonJS modules
@@ -24,6 +23,7 @@ This is my todo list, it's pretty boring.
 -   The differences between Webpack and Rollup
 -   What is Tree-shaking, and how to enable it in Webpack
 -   How to use Webpack for multiple page application development
+-   How does Event Loop work in different environment
 
 ## not-started
 
