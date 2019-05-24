@@ -38,8 +38,33 @@ JavaScript 运行机制的特点就是单线程，在 Node.js 环境下也一样
 
 ## 工作线程
 
-<div style="width: 560px; margin-top: 20px;">![](/node-thread-pool.png)</div>
+在 Node 中，有两种类型的线程：一个事件循环线程（也被称为主循环，主线程，事件线程等）。另外一个是在工作线程池里的 `k` 个工作线程（也被称为线程池）。示意图如下：
+
+<div style="width: 640px; margin-top: 20px;">![](/node-thread-pool.png)</div>
+
+总体上说，事件循环线程负责任务编排，主要执行 JavaScript 回调和非阻塞 I/O；而工作线程专门处理繁重的任务，主要执行阻塞 I/O 和 CPU 密集型工作。要注意的是，这两种类型的线程都有可能发生阻塞，在好的情况下这可能会导致吞吐量下降（客户端/秒），而在最坏情况下可能会导致完全拒绝服务。
+
+### 哪些代码运行在事件循环线程上
+
+当 Node 程序运行时，程序首先完成初始化部分，即处理 `require` 加载的模块和注册事件回调。然后，Node 应用程序进入事件循环阶段，通过执行对应回调函数来对客户端请求作出回应。此回调将同步执行，并且可能在完成之后继续注册新的异步请求，这些异步请求的回调也会在事件循环线程中被处理。
+
+事件循环中同样也包含很多非阻塞异步请求的回调，如网络 I/O。
+
+总体来说，事件轮训线程执行事件的回调函数，并且负责对处理类似网络 I/O 的非阻塞异步请求。
+
+### 哪些代码运行在工作线程池
+
+[libuv](http://docs.libuv.org/en/v1.x/threadpool.html) 负责工作线程池的任务调度，Node 使用工作线程池来处理“高成本”的任务，这包括一些操作系统并没有提供非阻塞版本的 I/O 操作，以及一些 CPU 密集型的任务。
+
+具体来说，Node 模块中有如下这些 API 用到了工作线程池：
+
+-   I/O 密集型任务：
+    -   DNS：`dns.lookup()`，`dns.lookupService()`。
+    -   文件系统：所有的文件系统 API。除 `fs.FSWatcher()` 和那些显式同步调用的 API 之外，都使用 libuv 的线程池。
+-   CPU 密集型任务：
+    -   Crypto：`crypto.pbkdf2()`、`crypto.scrypt()`、`crypto.randomBytes()`、`crypto.randomFill()`、`crypto.generateKeyPair()`。
+    -   Zlib：所有 Zlib 相关函数，除那些显式同步调用的 API 之外，都适用 libuv 的线程池。
 
 ## 事件循环
 
-<div style="width: 560px; margin-top: 20px;">![](/node-main-thread.png)</div>
+<div style="width: 600px; margin-top: 20px;">![](/node-main-thread.png)</div>
