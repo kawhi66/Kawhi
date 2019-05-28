@@ -4,7 +4,8 @@ This is my todo list, it's pretty boring.
 
 ## working
 
--   How does CORS work
+-   How does HTTP Cache work
+-   How to handle Web-Security problem
 -   Solution of Asynchronous Programming in ES6
 -   The implementation of Sorting Algorithms
 
@@ -25,6 +26,7 @@ This is my todo list, it's pretty boring.
 -   How to use Webpack for multiple page application development
 -   How does Event Loop work in different environment
 -   When will fn execute in setTimeout(fn, 0)
+-   How does CORS work
 
 ## not-started
 
@@ -34,8 +36,6 @@ This is my todo list, it's pretty boring.
 -   What is AST
 -   What is Event Bubbling
 -   How does Digital Signature and Digital Certificate work
--   How does HTTP Cache work
--   How to handle Web-Security problem
 -   How to optimize Http Connection
 -   The differences between TCP and UDP
 -   Support React project in Arwen based on [react-boilerplate](https://github.com/kawhi66/react-boilerplate)
