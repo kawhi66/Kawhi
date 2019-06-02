@@ -11,7 +11,7 @@ There's no beginning, there'll be no end
 
 # 关于作者
 
-![](<Reg Presley.jpg>)
+<div style='width: 540px;'>![](/Reg Presley.jpg)</div>
 
 **Reginald Maurice Ball**, known as [Reg Presley](https://en.wikipedia.org/wiki/Reg_Presley), English [singer - songwriter](https://en.wikipedia.org/wiki/Singer-songwriter), lead singer of [the Troggs](https://en.wikipedia.org/wiki/The_Troggs).
 
