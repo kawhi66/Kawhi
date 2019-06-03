@@ -24,3 +24,21 @@ tags: HTTP
     如果服务器对象已经被删除了，服务器就会返回一个 HTTP/404 Not Found 响应，缓存也会将其副本删除。
 
 # 条件首部
+
+HTTP 定义了 5 个条件首部（它们都是以 If- 开头），分别为：`If-Match`，`If-None-Match`，`If-Modified-Since`，`If-Unmodified-Since`，`If-Range`。对缓存再验证来说最有用的是 `If-Modified-Since` 和 `If-None-Match`。
+
+![](/headers.png)
+
+`If-Modified-Since` 首部可以与 `Last-Modified` 响应首部配合工作。缓存再验证时，条件请求会包含一个 `If-Modified-Since` 首部，其中携带有最后修改已缓存副本的日期：
+
+```JavaScript
+If-Modified-Since: <cached last-modified date>
+```
+
+有些时候，仅使用 `If-Modified-Since` 是不够的。HTTP 允许用户对被称为**实体标签（ETag）**的“版本标识符”进行比较。实体标签是附加到文档上的任意标签，它们可能包含文档的序列号或版本名，或者是文档内容的校验或其他指纹信息。当发布者对文档进行修改时，可以同步修改文档的实体标签来说明这个新的版本。这样，缓存就可以利用 `If-None-Match` 条件首部对缓存进行再验证。
+
+```JavaScript
+If-None-Match: "<etag_value>"
+If-None-Match: "<etag_value>", "<etag_value>", …
+If-None-Match: *
+```
