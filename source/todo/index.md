@@ -5,6 +5,7 @@ This is my todo list, it's pretty boring.
 ## working
 
 -   How does HTTP Cache work
+-   How does Webpack HMR work
 -   How to handle Web-Security problem
 -   Solution of Asynchronous Programming in ES6
 -   The implementation of Sorting Algorithms
