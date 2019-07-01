@@ -4,9 +4,7 @@ This is my todo list, it's pretty boring.
 
 ## working
 
--   How does HTTP Cache work
--   How does Webpack HMR work
--   How to handle Web-Security problem
+-   Get familiar with TypeScript
 -   Solution of Asynchronous Programming in ES6
 -   The implementation of Sorting Algorithms
 
@@ -15,6 +13,8 @@ This is my todo list, it's pretty boring.
 -   The implementation of Promise
 -   The implementation of Virtual DOM
 -   The Vue's and React's implementation of Diff Algorithm
+-   How does HTTP Cache work
+-   How does Webpack HMR work
 -   How to handle Circular Dependency in module system
 
 ## done
@@ -37,6 +37,7 @@ This is my todo list, it's pretty boring.
 -   What is AST
 -   What is Event Bubbling
 -   How does Digital Signature and Digital Certificate work
+-   How to handle Web-Security problem
 -   How to optimize Http Connection
 -   The differences between TCP and UDP
 -   Support React project in Arwen based on [react-boilerplate](https://github.com/kawhi66/react-boilerplate)
