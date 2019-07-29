@@ -4,6 +4,7 @@ This is my todo list, it's pretty boring.
 
 ## working
 
+-   Get familiar with Sql Basics
 -   Get familiar with TypeScript
 -   Solution of Asynchronous Programming in ES6
 -   The implementation of Sorting Algorithms
