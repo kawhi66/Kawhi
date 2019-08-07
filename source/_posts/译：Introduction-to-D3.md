@@ -357,6 +357,171 @@ legend
 
 和我们已经创建的图例相似，让我们为我们的可视化数据的柱形条绑定数据到元素。
 
+作为开始，假设我们对一个给定年份（1900）和给定性别（2 = female）的人口分布感兴趣。我们可以在一个状态对象 `state` 中定义这些值，我们稍后会修改它。
+
+```JavaScript
+const state: { year: number; sex: number } = { year: 1900, sex: 2 };
+```
+
+为了过滤我们的数据到指定的集合（还记得我们对一个年份和性别感兴趣吗），我们在每一行记录上定义一个函数。回忆一下一个记录行是类似于下面的一个 JSON 对象：
+
+```JavaScript
+{ "year": 1900, "age_group": 0, "sex": 1,"people": 4619544 }
+```
+
+```JavaScript
+const filteredData = data.filter(row => isYearAndSex(row, state.year, state.sex));
+```
+
+| year | age_group | sex | people |
+| ---- | --------- | --- | ------ |
+| 1900 | 0         | 2   | 4589196 |
+| 1900 | 5         | 2   | 4390483 |
+| 1900 | 10        | 2   | 4001749 |
+| 1900 | 15        | 2   | 3801743 |
+| 1900 | 20        | 2   | 3751061 |
+| 1900 | 25        | 2   | 3236056 |
+| 1900 | 30        | 2   | 2665174 |
+| 1900 | 35        | 2   | 2347737 |
+| 1900 | 40        | 2   | 2004987 |
+| 1900 | 45        | 2   | 1648025 |
+| 1900 | 50        | 2   | 1411981 |
+| 1900 | 55        | 2   | 1064632 |
+| 1900 | 60        | 2   | 887508  |
+| 1900 | 65        | 2   | 640212  |
+| 1900 | 70        | 2   | 440007  |
+| 1900 | 75        | 2   | 265879  |
+| 1900 | 80        | 2   | 132449  |
+| 1900 | 85        | 2   | 48614   |
+| 1900 | 90        | 2   | 20093   |
+
+我们现在可以根据我们过滤得到的数据集执行一次数据绑定了。
+
+```JavaScript
+const bars = chart.selectAll(".bar").data(filteredData);
+```
+
+柱状条的选择将是一个空的 `selectAll`，因为我们还没有画任何一个。这意味着所有的数据点将在绑定的 `.enter()` 集合中。
+
+现在，对处于 `enter` 集合中的所有数据记录，追加一个 `rect` 元素，并给定一个适当的尺寸（size）和位置（position）。可以这样想：对每一个数据点，创建一个指定属性的矩形元素。
+
+```JavaScript
+const enterbars = bars
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", (d: Row) => x(d.age_group))
+  .attr("y", (d: Row) => y(d.people))
+  .attr("width", x.bandwidth())
+  .attr("height", (d: Row) => height - y(d.people))
+  .attr("fill", (d: Row) => color(d.sex));
+```
+
+让我们使用我们关于 `enter()` 的知识来理解这里发生了什么。
+
+1. `chart.selectAll('.bar')` 在 `chart` 中选择了所有带有 `bar` 类的 DOM 元素（以及它的数据绑定，如果有的话）。因为我们还没有添加任何带有 `bar` 样式类的任何元素，所以这将是一个空的元素集合。
+2. `{...}.data(filteredData)` 在上面选择的空元素集合与过滤得到的数据集合之间执行了一个相当于数据连接的操作。连接的关键默认是数据集合中每一个数据项的索引。由于在这个点上，所有的数据项还没有绑定 DOM 元素，这次连接的结果首先是一个 `enter()` 集合，其中每一个数据点都包含一个数据项和一个 DOM 元素的绑定，然后是一个空的 `update()` 集合，再然后是一个空的 `exit()` 集合。
+3. `.enter()` 简单地选择了 `enter()` 集合。
+4. `append('rect')` 为已选集合中的每一项创建和追加了一个 DOM 元素（一个 svg 元素 `rect`）。在这里，我们为我们过滤得到的数据中的每一个记录行创建了一个 `rect` 元素。
+5. `attr('class', 'bar') 再一次为每一个元素设置了属性 `class`。现在，如果我们执行一次 `.selectAll('.bar')`，我们将收到我们刚刚创建的所有元素。
+
+每个柱状条的视觉属性按照下面的方式来计算：
+
++ 它的 x 的位置是一个关于数据项中指定的 `age_group` 的函数。我们之前创建了这个函数，它就是 x 比例！
++ 它的 y 的位置是一个关于人口数量的函数，由我们的 y 比例决定。
++ 它的宽度是我们的有序比例中的 `bandwidth`（也就是每一列的保留宽度）。
++ 它的高度是它在 y 方向上的起始点到图的底部（也就是 x 轴所在的位置）的距离。记住 `(0, 0)` 是我们的左上角，因此 `height` 在 y 方向上是我们的“底部”。
++ 它的填充颜色是一个关于它的数据项中指定的性别的函数，由我们的颜色比例决定。
+
+我们的静态可视化图已经正式完成了！注意现在展示的的是指定的年份和性别的人口数据。下一节中，我们将探索如何才能把交互合并到我们的可视化图中，来允许用户修改数据中应用到的过滤方法。
+
+<div style="width: 640px;">![](/single.png)</div>
+
+### 使用 Update 创建一个动态的可视化图
+
+`Update` 可以帮助我们展示在我们的可视化图中引用的数据的修改，而不需要重新全部去渲染它。这在使用过渡和动画的场景下是尤其有用的。
+
+下面，我们实现一个单一的更新方法，这个方法执行几个步骤：
+
+1. 它接收一个性别和 10 年的步长，过滤出数据的一个新的子集合。
+2. 选择所有的 `bar` 元素并使用新的数据来连接它们（记住，由于我们没有提供明确的 `key` 方法，d3 将根据数据项的索引来连接它们）。
+3. 选择 `update()` 集合，并调整每一个柱形条的属性（比如 `size`）来匹配新的数据。注意我们在这里并没有追加任何新的元素！我们简单地只是修改了这些已经存在的元素的可视化属性来匹配新的绑定到它们的数据。
+
+`Transitions` 允许我们根据给定的过渡时间（duration）在每个柱形条的原有外观和我们刚刚指定的新的外观之间进行插入。我们可以命名一次 `transition` 来为它创建一个唯一键。拥有相同名字的过渡变化有能力彼此覆盖。
+
+```JavaScript
+function updateNaive(sex: number, step: number) {
+  // Step 1
+  state.year += step;
+  state.sex = sex;
+  const newData = data.filter(row => isYearAndSex(row, state.year, state.sex));
+
+  // Step 2
+  const bars = chart.selectAll(".bar").data(newData);
+
+  // Step 3
+  bars
+    .transition("update")
+    .duration(500)
+    .attr("x", (d: Row) => x(d.age_group))
+    .attr("y", (d: Row) => y(d.people))
+    .attr("height", (d: Row) => height - y(d.people))
+    .attr("fill", (d: Row) => color(d.sex));
+
+  const currYearNaive: any = document.getElementById("curr-year-naive");
+  if (currYearNaive !== null) {
+    currYearNaive.textContent = state.year;
+  }
+}
+```
+
+![](/dynamic.png)
+
+```HTML
+<div style="width: 800px; text-align: center; font-family: sans-serif">
+  <button id="decrement">&lt;&lt;</button> <span id="curr-year-naive">--</span> <button id="increment">&gt;&gt;</button>
+  <br />
+  <button id="switch-sex">switch sex</button>
+</div>
+```
+
+```JavaScript
+const decrement: any = document.getElementById("decrement");
+if (decrement !== null) {
+  decrement.onclick = () => {
+    if (state.year > 1900) {
+      updateNaive(state.sex, -10);
+    }
+  };
+}
+
+const increment: any = document.getElementById("increment");
+if (increment !== null) {
+  increment.onclick = () => {
+    if (state.year < 2000) {
+      updateNaive(state.sex, 10);
+    }
+  };
+}
+
+const switchSexButton: any = document.getElementById("switch-sex");
+if (switchSexButton !== null) {
+  switchSexButton.onclick = () => {
+    updateNaive(state.sex === 2 ? 1 : 2, 0);
+  };
+}
+
+const currYearNaive: any = document.getElementById("curr-year-naive");
+if (currYearNaive !== null) {
+  currYearNaive.textContent = state.year;
+}
+```
+
+我们现在可以循环选择我们的数据集的年份，并且切换性别了！
+
+
+
+
 
 
 # Introduction to D3
@@ -610,3 +775,258 @@ Take a look at our container with the axis titles and the color legend:
 <div style="width: 720px;">![](/frame.png)</div>
 
 Now that we've setup the frame of our chart, let's start to deal with the real data!
+
+## Data Bindings
+
+The data bind is a core programming paradigm in D3. A data binding is similar to a data join. In short, it's a step that makes your elements aware of the data: you can pass this data in the form of an array or object, and "bind" your data to the DOM elements you selected using methods like d3.selectAll(). This is what it looks like:
+
+```JavaScript
+d3.selectAll('<selector>').data(<data>)
+```
+
+What's happening here?
+
++ selectAll('<selector>') selects all DOM elements and their data bindings (if any) in a given D3 container (if we use d3.selectAll, we are looking on the entire page, if we do chart.selectAll, it'll select within the chart container). Abstractly, the result of a selection that has data bound will look something like this:
+
+```JavaScript
+[
+  { id: 0, element: <DOM Element>, datum: <row from dataset> },
+  { id: 1, element: <another DOM Element>, datum: <another row from dataset> }
+  ...
+]
+```
+
++ .data(<data>) binds the data to the elements selected (replacing old bindings if they exist) by performing the equivalent of a database 'join' on the selection above and the data given. The key used for the join, by default, is simply the index of each datum in the data.
+
+The result of a binding is three sets of element + data pairs.
+
+1. enter(): The set of data that do not have bound DOM elements.
+2. update()*: The set of DOM elements that already have data (* note: this is an implicit set. It is the set of elements that will be modified if neither enter() nor exit() are selected from the result of data().
+3. exit(): The set of DOM elements that do not have data bound.
+
+t may be helpful to remember the symmetry here! There is also a helpful fourth set, merge(), the union of enter() and update() sets.
+
+To understand this paradigm, let's go through each of these sets step by step.
+
+### Data binding 101: Recreate the legends manually with Enter
+
+As a small first example to data binding, let's recreate the legend manually. We can do so by creating new DOM elements using the enter() set. Manual legends are just like the other elements of your visualization: by creating a new set of marks, binding the data, and using scales to style the attributes.
+
+Programmatically, data binding goes through several steps (we will see more when we talk about interactions later):
+
+1. select all of elements with the legend class with selectAll(). Because we haven't created any yet, the result of selectAll will be an empty set.
+2. bind our data with .data() (in this case, the domain of color, which is the values of sex.)
+3. Invoke enter() to work on the set of input data without a corresponding bound DOM element.
+4. append() a new DOM element for every data point in the enter set. We append the g for each sex value (hence we have two).
+5. Invoke attr() for each element with anonymous functions function(d, i) which are then applied to the bound data, and return values based on two parameters d (our bound datum) and i (the index of our datum). Here, we specify an offset of 20 vertical pixels between g elements.
+
+```JavaScript
+const legend: any = chart
+  .selectAll(".legend")                    // step 1
+  .data(color.domain())                    // step 2
+  .enter()                                 // step 3
+  .append("g")                             // step 4
+  .attr("class", "legend")                 // step 5
+  .attr("transform", function(i: number) { // step 5
+    // i 是索引
+    return `translate(0, ${i * 20})`;
+  })
+  .style("font-family", "sans-serif");
+```
+
+Then, we can further append elements onto the wrapper group g. By appending elements onto legend, elements get automatically mapped to each datum in our color.domain(). Hence, we will have two rect elements (rectangles) in total, one for each sex. Inside the g for each sex, both rects are placed at (x=360, y=65). Recall that the two g elements have a 20 pixel offset in between them, which means we will also have a 20 pixel vertical gap between the rectangles. Think of it as an inherited padding.
+
+```JavaScript
+legend
+  .append("rect")
+  .attr("class", "legend-rect")
+  .attr("x", width + margin.right - 12)
+  .attr("y", 65)
+  .attr("width", 12)
+  .attr("height", 12)
+  .style("fill", color);
+```
+
+Similarly, we can append text to create the legend labels, and set their text to be Male and Female, instead of the uninformative 1 and 2.
+
+```JavaScript
+legend
+  .append("text")
+  .attr("class", "legend-text")
+  .attr("x", width + margin.right - 22)
+  .attr("y", 70)
+  .style("font-size", "12px")
+  .attr("dy", ".35em")
+  .style("text-anchor", "end")
+  .text(function(d: number) {
+    return d === 1 ? "Male" : "Female";
+  });
+```
+
+<div style="width: 640px;">![](/legend.png)</div>
+
+### Creating bars with Enter
+
+Similar to how we've created the legend, let's bind our data onto elements for the bars of our visualization.
+
+As a starting point, suppose we are interested in seeing the population distribution for a given year (1900) and sex (2 = female). We can define these values in a state object, which we will manipulate later.
+
+```JavaScript
+const state: { year: number; sex: number } = { year: 1900, sex: 2 };
+```
+
+To filter our data to specific rows of interest (recall that we are interested in a specific year and sex), we define a function on a row. Recall that a row is a JSON object that looks like the following:
+
+```JavaScript
+{ "year": 1900, "age_group": 0, "sex": 1,"people": 4619544 }
+```
+
+```JavaScript
+const filteredData = data.filter(row => isYearAndSex(row, state.year, state.sex));
+```
+
+| year | age_group | sex | people |
+| ---- | --------- | --- | ------ |
+| 1900 | 0         | 2   | 4589196 |
+| 1900 | 5         | 2   | 4390483 |
+| 1900 | 10        | 2   | 4001749 |
+| 1900 | 15        | 2   | 3801743 |
+| 1900 | 20        | 2   | 3751061 |
+| 1900 | 25        | 2   | 3236056 |
+| 1900 | 30        | 2   | 2665174 |
+| 1900 | 35        | 2   | 2347737 |
+| 1900 | 40        | 2   | 2004987 |
+| 1900 | 45        | 2   | 1648025 |
+| 1900 | 50        | 2   | 1411981 |
+| 1900 | 55        | 2   | 1064632 |
+| 1900 | 60        | 2   | 887508  |
+| 1900 | 65        | 2   | 640212  |
+| 1900 | 70        | 2   | 440007  |
+| 1900 | 75        | 2   | 265879  |
+| 1900 | 80        | 2   | 132449  |
+| 1900 | 85        | 2   | 48614   |
+| 1900 | 90        | 2   | 20093   |
+
+We can now perform a data binding on our filtered dataset.
+
+```JavaScript
+const bars = chart.selectAll(".bar").data(filteredData);
+```
+
+The bar selection will be an empty selectAll, because we have yet to draw any. This means all the data points will be in the .enter() set of the binding.
+
+Now, for everything in the enter set, append a rect element and size / position appropriately. Think of this as: for each datapoint, create a rect with the given attributes.
+
+```JavaScript
+const enterbars = bars
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", (d: Row) => x(d.age_group))
+  .attr("y", (d: Row) => y(d.people))
+  .attr("width", x.bandwidth())
+  .attr("height", (d: Row) => height - y(d.people))
+  .attr("fill", (d: Row) => color(d.sex));
+```
+
+Let's use our new knowledge of enter() to understand what's going on here.
+
+1. chart.selectAll('.bar') selects all DOM elements (and their data bindings, if any) in chart with attribute class = 'bar'. Because we have not yet added any elements with the class 'bar', this is an empty set of elements.
+2. {...}.data(filteredData) performs the equivalent of a database 'join' on the the empty set selected above and the filtered data. The key used for the join, by default, is simply the index of each datum in the data. Because, at this point, all datum have no bound DOM element, the result of this join will be (a) an enter() set containing a datum + DOM bindings (present or otherwise) for every data point, (b) an empty update() set, and (c) an empty exit() set.
+3. .enter() simply selects the enter() set.
+4. append('rect') creates and appends a DOM element (an svg 'rect') for every item in the selected set. In this case, we are creating a rect for every row in our filteredData.
+5. attr('class', 'bar'), applies the attribute class="bar" to, again, every element in our selected set. Now, if we perform a .selectAll('.bar'), we will receive all of the elements we have just created!
+
+The visual attributes of each bar are calculated as follows:
+
++ Its x position is a function of the age_group of its datum d. We created this function earlier, it's the x scale!
++ Its y position is a function of the people, as determined by our y scale.
++ Its width is bandwidth of our ordinal scale (the space reserved for each column).
++ Its height is the distance between its starting y position and the 'bottom' of the chart, where the x axis lies. Remember that (0, 0) is in our top left corner, so a y position of height is our 'bottom'.
++ Its fill color is a function of the 'sex' of its datum, as determined by our color scale.
+
+Our static visualization is officially complete! Note that this is displaying the population of a single decade and sex. In the next section, we will look at how we can incorporate interaction into our visualization to allow users to change the filter being applied to the data.
+
+<div style="width: 640px;">![](/single.png)</div>
+
+### Creating a dynamic visualization with Update
+
+Update can help us display modifications to the data presented by our visualization, without needing to re-render it entirely. This is especially powerful in enabling transitions and animations.
+
+Below, we implement a simple update function. This function performs several steps.
+
+1. It takes a sex and a decade step (e.g. +10, -10), filters out a new subset of the data.
+2. Selects all 'bar' elements and joins them with this new data (remember, because we have provided no explicit 'key' function, d3 joins on the index of the data).
+3. Selects the update() set (implicitly), and adjusts the attributes of each bar (e.g. size) to match the new data. Notice that we are not appending any new elements here! We are simply changing the visual attributes of existing elements to match the new data bound to them.
+
+Transitions allow us to interpolate between each bar's previous appearance and the new one we just specified over the given duration. We can name a transition to create a key for it. Transitions with the same name have the ability to override each other.
+
+```JavaScript
+function updateNaive(sex: number, step: number) {
+  // Step 1
+  state.year += step;
+  state.sex = sex;
+  const newData = data.filter(row => isYearAndSex(row, state.year, state.sex));
+
+  // Step 2
+  const bars = chart.selectAll(".bar").data(newData);
+
+  // Step 3
+  bars
+    .transition("update")
+    .duration(500)
+    .attr("x", (d: Row) => x(d.age_group))
+    .attr("y", (d: Row) => y(d.people))
+    .attr("height", (d: Row) => height - y(d.people))
+    .attr("fill", (d: Row) => color(d.sex));
+
+  const currYearNaive: any = document.getElementById("curr-year-naive");
+  if (currYearNaive !== null) {
+    currYearNaive.textContent = state.year;
+  }
+}
+```
+
+![](/dynamic.png)
+
+```HTML
+<div style="width: 800px; text-align: center; font-family: sans-serif">
+  <button id="decrement">&lt;&lt;</button> <span id="curr-year-naive">--</span> <button id="increment">&gt;&gt;</button>
+  <br />
+  <button id="switch-sex">switch sex</button>
+</div>
+```
+
+```JavaScript
+const decrement: any = document.getElementById("decrement");
+if (decrement !== null) {
+  decrement.onclick = () => {
+    if (state.year > 1900) {
+      updateNaive(state.sex, -10);
+    }
+  };
+}
+
+const increment: any = document.getElementById("increment");
+if (increment !== null) {
+  increment.onclick = () => {
+    if (state.year < 2000) {
+      updateNaive(state.sex, 10);
+    }
+  };
+}
+
+const switchSexButton: any = document.getElementById("switch-sex");
+if (switchSexButton !== null) {
+  switchSexButton.onclick = () => {
+    updateNaive(state.sex === 2 ? 1 : 2, 0);
+  };
+}
+
+const currYearNaive: any = document.getElementById("curr-year-naive");
+if (currYearNaive !== null) {
+  currYearNaive.textContent = state.year;
+}
+```
+
+We can now cycle through the decades of our dataset and switch the filtered sex!
