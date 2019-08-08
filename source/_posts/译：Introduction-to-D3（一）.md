@@ -1,16 +1,16 @@
 ---
-title: 译：Introduction to D3
+title: 译：Introduction to D3（一）
 date: 2019-08-02 09:44:05
 tags: 外文翻译
 ---
 
-介绍 D3。
+谈到数据可视化技术，一定离不开 [D3](https://d3js.org/)。这个名字很有意思，D3 的全称是 **Data-Driven Documents**，也就是数据驱动文档。这一点和 MVVM 架构下的前端框架有异曲同工之妙，遗憾的是，关于 D3 的中文教程和文档少之又少，我在学习过程中找到了一篇介绍 D3 的教程式文章，两位作者来自于国外一个专门从事数据分析和数据可视化研究的实验室。原文是英文的，记录在 [Observable](https://observablehq.com/@uwdata/introduction-to-d3) 上，我把它翻译了一遍，本文是第一部分也是 D3 最核心的部分，主要介绍了 D3 的基础概念和使用方法。如果您跟我一样，对数据可视化和 D3 有兴趣，不妨把这篇博文收藏起来，如果以后遇到 D3 的问题，也许会在这里找到答案。
 
 # 关于作者
 
 ![](/Halden Lin, Tongshuang Wu.png)
 
-[Halden Lin](https://haldenl.com)，[Tongshuang (Sherry) Wu](http://homes.cs.washington.edu/~wtshuang/)，[华盛顿大学交互数据实验室](https://idl.cs.washington.edu)。
+[Halden Lin](https://haldenl.com)，[To·ngshuang (Sherry) Wu](http://homes.cs.washington.edu/~wtshuang/)，[华盛顿大学交互数据实验室](https://idl.cs.washington.edu)。
 
 # 介绍 D3
 
@@ -23,10 +23,6 @@ tags: 外文翻译
 这里是这篇文章将会构建的可视化数据的快览。
 
 <div style="width: 640px;">![](/main.png)</div>
-
-```JavaScript
-// TODO: 数据模型
-```
 
 ## 数据
 
@@ -519,10 +515,71 @@ if (currYearNaive !== null) {
 
 我们现在可以循环选择我们的数据集的年份，并且切换性别了！
 
+### 使用 Enter + Update + Exit 传递时间的移动
 
+尽管上面的简单的 `update` 已经覆盖了交互的基础，但仍然有提升的空间。回忆一下人口统计是每十年进行一次。这意味着在一次统计中 0 - 5 岁的人口在下一次的统计中将会是 10 - 15 岁。但在我们基础的 `update` 实现中，这是被隐藏的。柱状条扩大和收缩，如果对数据集合没有足够的了解或者细心的留意，人口年龄的变化并不清晰。
 
+我们可以连接 `enter`，`update`，和 `exit` 来通过动画实现时间的编码。接下来我们将要这么做。
 
+Step 1. *Data*。和以前一样，修改我们的状态并过滤数据来匹配它。
+Step 2. *Join*。和以前一样，选择我们的柱状条然后连接我们的新的数据。然而，这次我们给 `.data()` 一个关键函数。我们希望当前统计年份的人口和下一个统计年份的人口相匹配。如果用 `step` 表示我们的统计年份的调整，那么在下一年（`state.year`）中年龄组为 `d.age_group` 的数据行应该和前一年中年龄组（当前绑定 DOM 元素的数据行）为 `d.age_group - step` 的数据行相匹配。例如，如果我们从 1900 年过渡到 1910 年，那么在 1910 年 10 - 15 岁的数据应该和 1900 年 0 - 5 岁的数据相匹配。
 
+```JavaScript
+const bars = chart.selectAll(".bar").data(newData, (d: Row) => {
+  if (d.year === state.year) {
+    // the age for the current year should match the age - step for the previous year.
+    return d.age_group - step;
+  } else {
+    return d.age_group;
+  }
+});
+```
+
+Step 3. *Enter*。如果我们把统计年份向前移动，我们的 `enter` 集合将包含年龄组 0 - 5 和 5 - 10，尽管那些人还没有出生。我们应该为这些数据添加新的柱状条并且是以动画的形式。
+
+```JavaScript
+bars
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", (d: Row) => x(d.age_group))
+  .attr("y", (d: Row) => y(0))
+  .attr("width", x.bandwidth())
+  .attr("height", 0)
+  .attr("fill", (d: Row) => color(d.sex))
+  .transition("enter-transition")
+  .duration(500)
+  .attr("y", (d: Row) => y(d.people))
+  .attr("height", (d: Row) => height - y(d.people));
+```
+
+Step 4. *Update*。 对于我们 `update` 集合中的柱状条，我们需要移动他们到合适的 x 位置，并调整他们的高度。
+
+```JavaScript
+bars
+  .transition("update-transition")
+  .duration(500)
+  .attr("x", (d: Row) => x(d.age_group))
+  .attr("y", (d: Row) => y(d.people))
+  .attr("height", (d: Row) => height - y(d.people))
+  .attr("fill", (d: Row) => color(d.sex));
+```
+
+Step 5. *Exit*。如果我们把统计年份向前移动，我们的 `exit` 集合将包含年龄组 85 - 90 和 95+。我们需要把它们过渡出去，因为他们将被来自之前统计年份中的年龄组 75 - 85 和 80 - 85 取代（注意笼统的年龄组 95+ 打破了之前的类比）。
+
+```JavaScript
+bars
+  .exit()
+  .transition("exit-transition")
+  .duration(500)
+  .attr("height", 0)
+  .attr("y", y(0))
+  .remove();
+```
+
+这总结了我们的 D3 之旅中的核心思想！
+
+继续阅读关于鼠标事件和他们的交互技术的更多知识！
 
 # Introduction to D3
 
@@ -535,10 +592,6 @@ if (currYearNaive !== null) {
 Here's a sneak peek of the visualization we'll be creating in this notebook.
 
 <div style="width: 640px;">![](/main.png)</div>
-
-```JavaScript
-// TODO
-```
 
 ## Data
 
@@ -1030,3 +1083,69 @@ if (currYearNaive !== null) {
 ```
 
 We can now cycle through the decades of our dataset and switch the filtered sex!
+
+### Conveying temporal movement with Enter + Update + Exit
+
+While our simple update above covers the basics of interaction, there is room for improvement. Recall that the census is taken every 10 years. This means that a population that is 0-5 years old in one census reading will be 10-15 in the next. In our basic update implementation, this idea is hidden! Bars grow and shrink, but without knowledge of the dataset or careful attention, it would be otherwise unclear how the population is aging.
+
+We can combine enter, update, and exit to achieve this temporal encoding through animation. Here's how we'll do it.
+
+Step 1. Data. Like before, modify our state and filter our data to match it.
+Step 2. Join. Like before, select our 'bar's and join on our new data. However, this time we give .data() a key function. We wish to match the population of the current census year with its record in the next census year. If step denotes our census year adjustment, then a row in the next year (state.year) for age group d.age_group should be matched with the row in the previous year with age group (the row currently bound to that DOM element) d.age_group - step. For example, if we are transitioning from 1900 to 1910, then the 10-15 year olds in 1910 should be matched with the 0-5 year olds from 1900.
+
+```JavaScript
+const bars = chart.selectAll(".bar").data(newData, (d: Row) => {
+  if (d.year === state.year) {
+    // the age for the current year should match the age - step for the previous year.
+    return d.age_group - step;
+  } else {
+    return d.age_group;
+  }
+});
+```
+
+Step 3. Enter. If we are stepping forward in time, our enter set will contain the age groups 0-5 and 5-10, as those people are yet to be born. We should append new bars for these datum and animate them in.
+
+```JavaScript
+bars
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", (d: Row) => x(d.age_group))
+  .attr("y", (d: Row) => y(0))
+  .attr("width", x.bandwidth())
+  .attr("height", 0)
+  .attr("fill", (d: Row) => color(d.sex))
+  .transition("enter-transition")
+  .duration(500)
+  .attr("y", (d: Row) => y(d.people))
+  .attr("height", (d: Row) => height - y(d.people));
+```
+
+Step 4. Update. For bars in our update set, we need to shift them over to the appropriate x position and adjust their height.
+
+```JavaScript
+bars
+  .transition("update-transition")
+  .duration(500)
+  .attr("x", (d: Row) => x(d.age_group))
+  .attr("y", (d: Row) => y(d.people))
+  .attr("height", (d: Row) => height - y(d.people))
+  .attr("fill", (d: Row) => color(d.sex));
+```
+
+Step 5. Exit. If we are stepping forward in time, our exit set will contain the age groups 85-90 and 95+. We need to transition these out, as they will be replaced by the age groups 75-85 and 80-85 from the previous decade (note that the catch-all of a 95+ age group slightly breaks the analogy).
+
+```JavaScript
+bars
+  .exit()
+  .transition("exit-transition")
+  .duration(500)
+  .attr("height", 0)
+  .attr("y", y(0))
+  .remove();
+```
+
+This concludes our tour of the core ideas in D3! 🏄‍♀️🏄‍
+
+Read on to learn more about mouse events and other interaction techniques.
