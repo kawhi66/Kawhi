@@ -1,14 +1,14 @@
 ---
 title: '译：JavaScript Module Pattern: In-Depth'
-date: 2018-07-19 11:01:48
+date: 2018-07-11 11:10:39
 tags: 外文翻译
 ---
 
-原文出自：[JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)
+Javascript 模块模式的古老实现。
 
 # 关于作者
 
-这篇文章记录在了作者的[博客](http://www.adequatelygood.com/)上面，可以看到是2010年写的，距离现在已经有快7个年头了，在准备本文的同时，我对博客的主人 [ben cherry](http://www.linkedin.com/in/bcherryprogrammer/)（也是本文的作者） 做了大致的了解。其实 Ben 现在已经没有在写多少 Js 了，他现在更多的是写 Ruby 和 Object-C。作者写这篇文章的时候应该是在 [Slide公司](http://www.linkedin.com/company/167696/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3B4mGHkShMS7GM7OWjQTLXUg%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_flagship3_profile_view_base-background_details_company) 任职软件工程师。
+这篇文章记录在了作者的[博客](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)上面，可以看到是2010年写的，距离现在已经有快7个年头了，在准备本文的同时，我对博客的主人 [ben cherry](http://www.linkedin.com/in/bcherryprogrammer/)（也是本文的作者） 做了大致的了解。其实 Ben 现在已经没有在写多少 Js 了，他现在更多的是写 Ruby 和 Object-C。作者写这篇文章的时候应该是在 [Slide公司](http://www.linkedin.com/company/167696/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3B4mGHkShMS7GM7OWjQTLXUg%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_flagship3_profile_view_base-background_details_company) 任职软件工程师。
 
 **_以下是译文部分_**：
 

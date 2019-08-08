@@ -1,10 +1,10 @@
 ---
 title: ES6：import 和 export
-date: 2018-07-11 11:10:39
+date: 2018-07-18 16:03:18
 tags: ES6
 ---
 
-记录前端的模块化。
+Javascript 模块模式的演进。
 
 # 前端模块化
 
