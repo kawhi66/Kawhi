@@ -4,7 +4,6 @@ This is my todo list, it's pretty boring.
 
 ## working
 
--   Get familiar with Sql Basics
 -   Get familiar with TypeScript
 -   Solution of Asynchronous Programming in ES6
 -   The implementation of Sorting Algorithms
@@ -17,6 +16,7 @@ This is my todo list, it's pretty boring.
 -   How does HTTP Cache work
 -   How does Webpack HMR work
 -   How to handle Circular Dependency in module system
+-   Get familiar with Sql Basics
 
 ## done
 
