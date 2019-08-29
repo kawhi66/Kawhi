@@ -4,7 +4,7 @@ date: 2019-08-09 10:08:28
 tags: 外文翻译
 ---
 
-本文是译文：[介绍 D3](https://observablehq.com/@uwdata/introduction-to-d3) 的第二部分，也是最后一部分，主要内容是介绍 D3 的其他交互技术。
+本文是 [introduction-to-d3](https://observablehq.com/@uwdata/introduction-to-d3) 的最后一部分，主要内容是介绍 D3 的其他交互技术，包括创建提示信息和动态图例。
 
 # 关于作者
 
