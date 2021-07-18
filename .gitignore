@@ -1,3 +1,4 @@
 node_modules
 package-lock.json
-.hui
+src/.hui
+dist
