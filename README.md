@@ -10,6 +10,8 @@ hui build
 cd dist
 
 git init
+git config user.name kawhi66
+git config user.email kawhi_site@163.com
 git add -A
 git commit -m 'deploy to gh-pages'
 
