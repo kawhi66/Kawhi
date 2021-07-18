@@ -1,0 +1,8 @@
+{
+  "name": "kawhi.site",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "hui-core": "^1.6.1"
+  }
+}
